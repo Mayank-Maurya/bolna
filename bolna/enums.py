@@ -50,6 +50,7 @@ class SynthesizerProvider(str, Enum):
     SARVAM = "sarvam"
     RIME = "rime"
     PIXA = "pixa"
+    OPENROUTER = "openrouter"
 
     @classmethod
     def all_values(cls):

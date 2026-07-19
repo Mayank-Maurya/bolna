@@ -61,6 +61,12 @@ class OpenAIConfig(BaseModel):
     model: str
 
 
+class OpenRouterConfig(BaseModel):
+    voice: str
+    model: str = "openai/gpt-4o-mini-tts"  # any OpenRouter TTS model id
+    speed: Optional[float] = 1.0
+
+
 class DeepgramConfig(BaseModel):
     voice_id: str
     voice: str
@@ -153,6 +159,7 @@ class Synthesizer(BaseModel):
         CartesiaConfig,
         DeepgramConfig,
         OpenAIConfig,
+        OpenRouterConfig,
     ] = Field(union_mode="smart")
     stream: bool = False
     buffer_size: Optional[int] = 40  # 40 characters in a buffer
@@ -196,6 +203,9 @@ class Synthesizer(BaseModel):
         elif provider == "rime":
             if isinstance(config, dict):
                 values["provider_config"] = RimeConfig(**config)
+        elif provider == "openrouter":
+            if isinstance(config, dict):
+                values["provider_config"] = OpenRouterConfig(**config)
 
         return values
 
